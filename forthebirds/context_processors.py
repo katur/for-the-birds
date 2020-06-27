@@ -18,14 +18,4 @@ def static_asset_hashes(request):
     except Exception:
         hashes = {}
 
-    res = {}
-
-    # the asset manifest is in the format `{ 'styles.css': '928af98e' }`,
-    # but jinja templates can only use simple dictionary accessors (e.g.
-    # `{{ hash.css }}`, not `{{ hash['css'] }}` or `{{ hash|get('css') }}`).
-    # this means we can't parse `styles.css` in the template, so convert
-    # dots to underscores.
-    for key, value in hashes.items():
-        res[key.decode('utf-8').replace('.', '_')] = value
-
-    return {'static_asset_hashes': res}
+    return {'static_asset_hashes': hashes}
